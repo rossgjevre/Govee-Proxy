@@ -21,13 +21,14 @@ app.post('/sensor', async (req, res) => {
   try {
     const { device, model } = req.body;
 
-    const response = await fetch("https://openapi.api.govee.com/router/api/v1/device/state", {
-      method: 'POST',
+    // Correct Govee endpoint + GET method
+    const url = `https://developer-api.govee.com/v1/devices/state?device=${encodeURIComponent(device)}&model=${model}`;
+
+    const response = await fetch(url, {
+      method: 'GET',
       headers: {
-        'Govee-API-Key': API_KEY,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ device, model })
+        'Govee-API-Key': API_KEY
+      }
     });
 
     const data = await response.json();
@@ -40,4 +41,4 @@ app.post('/sensor', async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`✅ Govee proxy running on port ${PORT}`);
-});	
+});
