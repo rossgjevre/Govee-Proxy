@@ -1,5 +1,5 @@
 const express = require('express');
-const fetch = require('node-fetch');   // ← Added here
+const fetch = require('node-fetch');   // Make sure this is here
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -36,7 +36,7 @@ app.post('/sensor', async (req, res) => {
     const data = await response.json();
     res.json(data);
   } catch (error) {
-    console.error(error);
+    console.error('Proxy Error:', error.message);
     res.status(500).json({ error: error.message });
   }
 });
